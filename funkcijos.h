@@ -47,12 +47,10 @@ void rasyti_i_faila_pagal_pavarde(Konteineris& studentai, string isvesties_faila
     failas<<fixed<<setprecision(2);
 
         for(auto& s : studentai){
-        double rezultatas1 = vidurkis(s.nd_rezultatai, s.egz_rezultatai);
-        double rezultatas2 = mediana(s.nd_rezultatai, s.egz_rezultatai);
-        failas <<left<<setw(15)<<s.pavarde
-               <<setw(15)<<s.vardas
-               <<setw(15)<<rezultatas1
-               <<rezultatas2
+               failas <<left<<setw(15)<<s.pavarde()
+               <<setw(15)<<s.vardas()
+               <<setw(15)<<s.galVid()
+               <<s.galMed()
                <<endl;
     }
 
@@ -82,8 +80,8 @@ void generuoti_faila(int studentu_kiekis, string failo_pavadinimas){
     }
     failas.close();
 }
-bool yra_vargsiukas(Studentas& s){
-    return vidurkis(s.nd_rezultatai, s.egz_rezultatai) < 5.0;
+bool yra_vargsiukas(const Studentas& s){
+    return s.galVid() < 5.0;
 }
 template <typename Konteineris>
 void strategija_1(Konteineris& studentai, Konteineris& vargsiukai, Konteineris& kietiakiai){
@@ -114,15 +112,14 @@ template <typename Konteineris>
 void strategija_3(Konteineris& studentai, Konteineris& vargsiukai){
     vargsiukai.clear();
     auto riba = stable_partition(studentai.begin(), studentai.end(),
-                          [](Studentas& s){ return !yra_vargsiukas(s); });
-    // move_iterator - studentai perkeliami, o ne kopijuojami (greiciau)
+                          [](const Studentas& s){ return !yra_vargsiukas(s); });
     vargsiukai.assign(make_move_iterator(riba), make_move_iterator(studentai.end()));
     studentai.erase(riba, studentai.end());
 }
 void strategija_3(list<Studentas>& studentai, list<Studentas>& vargsiukai){
     vargsiukai.clear();
     auto riba = stable_partition(studentai.begin(), studentai.end(),
-                          [](Studentas& s){ return !yra_vargsiukas(s); });
+                          [](const Studentas& s){ return !yra_vargsiukas(s); });
     vargsiukai.splice(vargsiukai.end(), studentai, riba, studentai.end());
 }
 template <typename Konteineris>
@@ -150,8 +147,7 @@ void rasyti_i_faila_pagal_pazymi(Konteineris& studentai, string isvesties_failas
     failas<<fixed<<setprecision(2);
 
         for(auto& s : studentai){
-        double galutinis = vidurkis(s.nd_rezultatai, s.egz_rezultatai);
-        failas<<left<<setw(20)<<s.vardas<<setw(20)<<s.pavarde<<galutinis<<"\n";
+        failas<<left<<setw(20)<<s.vardas()<<setw(20)<<s.pavarde()<<s.galVid()<<"\n";
     }
     failas.close();
 }
