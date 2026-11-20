@@ -45,4 +45,40 @@ Studentas::Studentas(std::istream& is) : egzaminas_(0), galVid_(0), galMed_(0) {
 Studentas::~Studentas() {
     nd_.clear();
 }
+// Galutiniai balai apskaiciuojami viena karta, kai duomenys nuskaitomi.
+// Kadangi duomenys po to nesikeicia, nereikia ju skaiciuoti is naujo kiekviena karta.
+void Studentas::skaiciuotiGalutinius() {
+    galVid_ = vidurkis(nd_, egzaminas_);
+    galMed_ = mediana(nd_, egzaminas_);
+}
+
+// Nuskaito: vardas pavarde nd1 nd2 ... ndN egz
+// Paskutinis skaicius - egzaminas, visi pries ji - namu darbai
+std::istream& Studentas::readStudent(std::istream& is) {
+    nd_.clear();
+    if (!(is >> vardas_ >> pavarde_)) {
+        return is;
+    }
+
+    std::vector<int> pazymiai;
+    int paz;
+    while (is >> paz) {
+        pazymiai.push_back(paz);
+    }
+
+    if (pazymiai.empty()) {          // nera nei vieno pazymio - eilute netinkama
+        is.setstate(std::ios::failbit);
+        return is;
+    }
+    if (is.eof()) {                  // perskaitem iki eilutes galo - viskas gerai
+        is.clear(std::ios::eofbit);
+    }
+
+    egzaminas_ = pazymiai.back();
+    pazymiai.pop_back();
+    nd_ = pazymiai;
+    skaiciuotiGalutinius();
+    return is;
+}
+
 
