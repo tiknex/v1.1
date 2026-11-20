@@ -12,36 +12,6 @@
 #include "studentas.h"
 using namespace std;
 
-double vidurkis(vector<int>& nd, vector<int>& egz) {  //& nedaro kopijos
-    double suma = 0; 
-    for(int i=0; i < (int)nd.size(); i++){
-        suma += nd[i];
-    }
-    for (int i = 0; i < (int)egz.size(); i++) {
-        suma += egz[i];
-    }
-    return suma / (nd.size()+egz.size());
-}
-double mediana(vector<int>& nd, vector<int>& egz) {
-    vector<int> visos_reiksmes;
-
-    for (int i = 0; i < (int)nd.size(); i++) {
-        visos_reiksmes.push_back(nd[i]);
-    }
-    for (int i = 0; i < (int)egz.size(); i++) {
-        visos_reiksmes.push_back(egz[i]);
-    }
-
-    sort(visos_reiksmes.begin(), visos_reiksmes.end());
-
-    int n = visos_reiksmes.size();
-
-    if (n % 2 == 1) {
-        return visos_reiksmes[n / 2];
-    } else {
-        return (visos_reiksmes[n/2 - 1] + visos_reiksmes[n/2]) / 2.0;
-    }
-}
 template <typename Konteineris>
 void nuskaityti_is_failo(Konteineris& studentai, string failo_pavadinimas){
     studentai.clear();
@@ -55,25 +25,12 @@ void nuskaityti_is_failo(Konteineris& studentai, string failo_pavadinimas){
     getline(failas, eilute);
 
     while(getline(failas, eilute)){
-        stringstream ss(eilute);
-        vector<string> zodziai;
-        string t;
-        while(ss >> t){
-            zodziai.push_back(t);
-        }
-
-        if(zodziai.size() < 3) continue;   
-
+                istringstream ss(eilute);
         Studentas A;
-        A.vardas = zodziai[0];
-        A.pavarde = zodziai[1];
-
-        for(int i = 2; i < (int)zodziai.size() - 1; i++){
-            A.nd_rezultatai.push_back(stoi(zodziai[i]));
+        if(A.readStudent(ss)){
+            studentai.push_back(A);
         }
-        A.egz_rezultatai.push_back(stoi(zodziai[zodziai.size() - 1]));
 
-        studentai.push_back(A);
     }
 
     failas.close();
