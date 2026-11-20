@@ -51,12 +51,13 @@ void programa(string konteinerio_pavadinimas){
     }
 
     if(pasirinkimas == 1){
-        Studentas A;
-        string atsakymas;
+        string vardas, pavarde, atsakymas;
+        vector<int> nd;
+        int egz;
         cout<<"iveskite studento varda"<<endl;
-        cin>>A.vardas;
+        cin>>vardas;
         cout<<"iveskite studento pavarde"<<endl;
-        cin>>A.pavarde;
+        cin>>pavarde;
         cout<<"ar norite sugeneruoti nd ir egazmino pazymius atsitiktinai taip/ne?"<<endl;
         cin>>atsakymas;
     if (atsakymas == "taip") {
@@ -65,11 +66,9 @@ void programa(string konteinerio_pavadinimas){
         cin >> kiekis_nd;
 
     for (int j = 0; j < kiekis_nd; j++) {
-        int atsitiktinis_skaicius_nd = rand() % 10 + 1;
-        A.nd_rezultatai.push_back(atsitiktinis_skaicius_nd);
+        nd.push_back(rand() % 10 + 1);
     }
-        int atsitiktinis_skaicius_egz = rand() % 10 + 1;
-        A.egz_rezultatai.push_back(atsitiktinis_skaicius_egz);   
+        egz = rand() % 10 + 1;  
     } else {
     cout << "iveskite studento nd pazymius, kai baigsite iveskite -1" << endl;
     while (true) {
@@ -78,12 +77,13 @@ void programa(string konteinerio_pavadinimas){
         if (reiksme == -1) {
             break;
         }
-        A.nd_rezultatai.push_back(reiksme);
+       nd.push_back(reiksme);
     }
     cout<<"iveskite studento egzamino pazymi"<<endl;
-    int egz_reiksme;
-    cin>>egz_reiksme;
-    A.egz_rezultatai.push_back(egz_reiksme);
+    cin>>egz;
+    }
+    // objektas sukuriamas konstruktoriumi su visais duomenimis
+    Studentas A(vardas, pavarde, nd, egz);
     }
     studentai.push_back(A);
     cout<<"studentas pridetas"<<endl;
