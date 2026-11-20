@@ -9,4 +9,5 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 endif()
 
-add_executable(studentai main.cpp)
+add_executable(studentai main.cpp studentas.cpp)
+
