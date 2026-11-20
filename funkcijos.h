@@ -102,7 +102,7 @@ void strategija_2(Konteineris& studentai, Konteineris& vargsiukai){
     while(it != studentai.end()){
         if(yra_vargsiukas(*it)){
             vargsiukai.push_back(*it);
-            it = studentai.erase(it);   // erase grazina iteratoriu i kita elementa
+            it = studentai.erase(it);
         } else {
             ++it;
         }

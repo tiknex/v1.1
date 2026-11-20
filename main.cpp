@@ -82,9 +82,7 @@ void programa(string konteinerio_pavadinimas){
     cout<<"iveskite studento egzamino pazymi"<<endl;
     cin>>egz;
     }
-    // objektas sukuriamas konstruktoriumi su visais duomenimis
     Studentas A(vardas, pavarde, nd, egz);
-    }
     studentai.push_back(A);
     cout<<"studentas pridetas"<<endl;
     cout<<"Studento objekto adresas atmintyje: "<<&studentai.back()<<endl;
@@ -100,12 +98,10 @@ void programa(string konteinerio_pavadinimas){
     cout<<string(85, '-')<<endl;
     cout<<fixed<<setprecision(2);
         for(auto& s : studentai){
-        double rezultatas1 = vidurkis(s.nd_rezultatai, s.egz_rezultatai);
-        double rezultatas2 = mediana(s.nd_rezultatai, s.egz_rezultatai);
-        cout <<left<<setw(15)<<s.pavarde
-             <<setw(15)<<s.vardas
-             <<setw(16)<<rezultatas1
-             <<setw(18)<<rezultatas2
+         cout <<left<<setw(15)<<s.pavarde()
+             <<setw(15)<<s.vardas()
+             <<setw(16)<<s.galVid()
+             <<setw(18)<<s.galMed()
              <<&s
              <<endl;
     }
