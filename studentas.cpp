@@ -80,5 +80,16 @@ std::istream& Studentas::readStudent(std::istream& is) {
     skaiciuotiGalutinius();
     return is;
 }
+bool palygintiPagalPazymi(const Studentas& a, const Studentas& b) {
+    return a.galVid() < b.galVid();
+}
+
+bool palygintiPagalVarda(const Studentas& a, const Studentas& b) {
+    return a.vardas() < b.vardas();
+}
+
+bool palygintiPagalPavarde(const Studentas& a, const Studentas& b) {
+    return a.pavarde() < b.pavarde();
+}
 
 
