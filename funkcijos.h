@@ -151,27 +151,15 @@ void rasyti_i_faila_pagal_pazymi(Konteineris& studentai, string isvesties_failas
     }
     failas.close();
 }
-
-
-bool pagal_pazymi(Studentas& a, Studentas& b){
-    return vidurkis(a.nd_rezultatai, a.egz_rezultatai) < vidurkis(b.nd_rezultatai, b.egz_rezultatai);
-}
-bool pagal_varda(Studentas& a, Studentas& b){
-    return a.vardas < b.vardas;
-}
-bool pagal_pavarde(Studentas& a, Studentas& b){
-    return a.pavarde < b.pavarde;
-}
-
 // budas: 1 - pagal pazymi, 2 - pagal varda, 3 - pagal pavarde
 void rusiuoti(vector<Studentas>& studentai, int budas){
-    if(budas == 1)      sort(studentai.begin(), studentai.end(), pagal_pazymi);
-    else if(budas == 2) sort(studentai.begin(), studentai.end(), pagal_varda);
-    else                sort(studentai.begin(), studentai.end(), pagal_pavarde);
+    if(budas == 1)      sort(studentai.begin(), studentai.end(), palygintiPagalPazymi);
+    else if(budas == 2) sort(studentai.begin(), studentai.end(), palygintiPagalVarda);
+    else                sort(studentai.begin(), studentai.end(), palygintiPagalPavarde);
 }
-
+ 
 void rusiuoti(list<Studentas>& studentai, int budas){
-    if(budas == 1)      studentai.sort(pagal_pazymi);
-    else if(budas == 2) studentai.sort(pagal_varda);
-    else                studentai.sort(pagal_pavarde);
+    if(budas == 1)      studentai.sort(palygintiPagalPazymi);
+    else if(budas == 2) studentai.sort(palygintiPagalVarda);
+    else                studentai.sort(palygintiPagalPavarde);
 }
